@@ -56,7 +56,7 @@ source("01_PA_burnout_main_analysis_CLEAN.R")
 
 ## 🤖 AI Statement
 
-This code was edited with the assistance of Claude Opus 4 (Anthropic, San Francisco: CA)
+This repo was vibe coded with the assistance of Claude Opus 4 (Anthropic, San Francisco: CA)
 
 ## 📜 License
 
