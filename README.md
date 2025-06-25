@@ -42,12 +42,14 @@ This repository contains the complete code and data for a systematic review and 
    install.packages(required_packages)
    ```
 ## Quick Start
+
 ```r
 # Set working directory to the R_code folder
 setwd("R_code/")
 
 # Run main analysis (Version 1.0.6)
 source("01_PA_burnout_main_analysis_CLEAN.R")
+```
 
 ## 🤖 AI Statement
 
