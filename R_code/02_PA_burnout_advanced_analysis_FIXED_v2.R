@@ -173,4 +173,4 @@ if(!is.null(reg_female)) {
              "No significant association between team gender composition and burnout rates"), "\n")
 }
 
-cat("\n🎯 READY FOR SUBMISSION TO HIGH-IMPACT JOURNAL! 🎯\n")
+cat("\n🎯 ADVANCED ANALYSIS COMPLETE 🎯\n")
