@@ -550,4 +550,4 @@ if(exists("egger_test")) {
 cat("\n✅ Analysis ready for manuscript preparation!\n")
 cat("🎯 Enhanced forest plot includes numerical RoB scores and female percentages\n")
 cat("📊 Female percentage meta-regression completed with visualization\n")
-cat("🚀 All outputs ready for high-impact journal submission!\n")
+cat("🚀 All outputs ready!\n")
