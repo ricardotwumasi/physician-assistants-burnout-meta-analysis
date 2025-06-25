@@ -16,6 +16,9 @@
   
 Full R code for reproducing our meta-analysis of the prevalance of burnout in PAs. This repository contains the code used in our systematic review and meta-analysis (Bock et al., in preparation) 
 
+## Registration  
+**PROSPERO Registration:** [CRD42025644630](https://www.crd.york.ac.uk/PROSPERO/view/CRD42025644630)
+
 ## Overview
 
 This repository contains the complete code and data for a systematic review and meta-analysis examining burnout prevalence among physician assistants/associates. The analysis includes 14 studies capturing data from approximately 24,200 PAs published between 2018-2024.
