@@ -1,6 +1,6 @@
 # Burnout among physician assistants/physician associates meta-analysis code
 
-[![DOI](https://zenodo.org/badge/DOI/[pending].svg)](https://doi.org/[pending])
+[![DOI](https://zenodo.org/badge/DOI/10.31234/osf.io/xgc5s_v1.svg)](https://doi.org/10.31234/osf.io/xgc5s_v1)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![R](https://img.shields.io/badge/R-4.1.0-blue.svg)](https://cran.r-project.org/)
 
@@ -106,16 +106,16 @@ For citing this repository, please use:
 <pre><code>@article{bock2025,
   title={Burnout among physician assistants/physician associates: A systematic review and meta-analysis},
   author={Bock, Anna; Knight, Alec; Twumasi, Ricardo},
-  journal={tbc},
-  year={2025},
+  journal={PsyArXiv},
+  year={2026},
   publisher={tbc},
-  doi={tbc}
+  doi={10.31234/osf.io/xgc5s_v1}
 }
 </code></pre>
 </details>
 <details>
 <summary>APA</summary>
-<pre><code>Bock, A., Knight, A. & Twumasi, R. (2025). Burnout among physician assistants/physician associates: A systematic review and meta-analysis. [Journal] [Year]* </code></pre>
+<pre><code>Bock, A., Knight, A. & Twumasi, R. (2025). Burnout among physician assistants/physician associates: A systematic review and meta-analysis. [PsyArXiv] [2026]* </code></pre>
 </details>
 <details>
 <summary>Vancouver</summary>
