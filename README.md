@@ -4,8 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![R](https://img.shields.io/badge/R-4.1.0-blue.svg)](https://cran.r-project.org/)
 
-## Version 1.0.6
-**Updated:** June 2025
+## Version 1.0.7
+**Updated:** January 2026
 
 ## Authors
 - Anna Bock¹, Alec Knight*², Ricardo Twumasi³
@@ -21,7 +21,7 @@ Full R code for reproducing our meta-analysis of the prevalance of burnout in PA
 
 ## Overview
 
-This repository contains the complete code and data for a systematic review and meta-analysis examining burnout prevalence among physician assistants/associates. The analysis includes 14 studies capturing data from approximately 24,200 PAs published between 2018-2024.
+This repository contains the complete code and data for a systematic review and meta-analysis examining burnout prevalence among physician assistants/associates. The analysis includes 18 studies capturing data from 47,098 PAs published between 2018-2026.
 
 ## 💻 Requirements
 
