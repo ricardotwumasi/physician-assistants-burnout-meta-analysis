@@ -1,13 +1,13 @@
 # ============================================================================
 # BURNOUT AMONG PHYSICIAN ASSISTANTS/ASSOCIATES: FIXED META-ANALYSIS
-# Version: 1.0.6 - Clean and Corrected
+# Version: 1.0.7 - New 2025 studies
 # Authors: Anna Bock, Alec Knight, Ricardo Twumasi
-# Last Updated: June 2025
+# Last Updated: Jan 25 2026
 # ============================================================================
 
-cat("🔥 PHYSICIAN ASSISTANTS/ASSOCIATES BURNOUT META-ANALYSIS\n")
+cat("PHYSICIAN ASSISTANTS/ASSOCIATES BURNOUT META-ANALYSIS\n")
 cat("=======================================================\n")
-cat("Version 1.0.6 - Clean and Corrected - Optimised Forest Plot\n")
+cat("Version 1.0.7 - Clean and Corrected - Optimised Forest Plot\n")
 cat("Following methods as specified in manuscript\n\n")
 
 # ============================================================================
@@ -20,7 +20,7 @@ required_packages <- c("metafor", "tidyverse", "meta", "dplyr", "ggplot2",
 for (pkg in required_packages) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     install.packages(pkg)
-    cat("📦 Installed package:", pkg, "\n")
+    cat("Installed package:", pkg, "\n")
   }
   library(pkg, character.only = TRUE)
 }
@@ -31,7 +31,7 @@ cat("✅ All required packages loaded successfully!\n\n")
 # DATA LOADING AND PREPARATION
 # ============================================================================
 
-cat("📊 Loading PA burnout meta-analysis data...\n")
+cat("Loading PA burnout meta-analysis data...\n")
 
 # Read the CSV file
 pa_data <- read.csv("PA Meta Extraction.csv", stringsAsFactors = FALSE)
@@ -82,9 +82,9 @@ pa_clean <- pa_data %>%
     specialty_group = case_when(
       specialty == "Any" ~ "General",
       grepl("Any", specialty) ~ "General",
-      specialty %in% c("Oncology", "Primary Care", "Dermatology", 
-                       "Orthopedics", "Plastic Surgery", "Psychiatry", 
-                       "Rheumatology") ~ specialty,
+      specialty %in% c("Oncology", "Primary Care", "Dermatology",
+                       "Orthopedics", "Plastic Surgery", "Psychiatry",
+                       "Rheumatology", "Urology", "Family Medicine") ~ specialty,
       TRUE ~ "Other"
     )
   ) %>%
@@ -149,11 +149,11 @@ print(res_overall)
 overall_results <- predict(res_overall, transf = transf.ilogit, digits = 3)
 
 cat("\n=== OVERALL BURNOUT PREVALENCE ===\n")
-cat("🔥 Pooled Proportion:", sprintf("%.2f%% (95%% CI: %.2f%% to %.2f%%)", 
+cat("Pooled Proportion:", sprintf("%.2f%% (95%% CI: %.2f%% to %.2f%%)", 
                                      overall_results$pred * 100, 
                                      overall_results$ci.lb * 100, 
                                      overall_results$ci.ub * 100), "\n")
-cat("📊 Prediction Interval:", sprintf("%.2f%% to %.2f%%", 
+cat("Prediction Interval:", sprintf("%.2f%% to %.2f%%", 
                                        overall_results$pi.lb * 100, 
                                        overall_results$pi.ub * 100), "\n")
 
@@ -508,8 +508,8 @@ write.csv(pa_final, "PA_burnout_final_dataset.csv", row.names = FALSE)
 write.csv(summary_stats, "PA_burnout_summary_stats.csv", row.names = FALSE)
 save.image("PA_burnout_meta_analysis_workspace.RData")
 
-cat("\n🎉 ENHANCED ANALYSIS COMPLETED SUCCESSFULLY!\n")
-cat("\n📁 FILES CREATED:\n")
+cat("\nENHANCED ANALYSIS COMPLETED SUCCESSFULLY!\n")
+cat("\nFILES CREATED:\n")
 cat("  • PA_forest_plot_main_with_rob_scores.pdf\n")
 cat("  • PA_publication_bias_assessment.pdf\n")
 if(!is.null(reg_female)) {
@@ -521,7 +521,7 @@ cat("  • PA_burnout_final_dataset.csv\n")
 cat("  • PA_burnout_summary_stats.csv\n")
 cat("  • PA_burnout_meta_analysis_workspace.RData\n")
 
-cat("\n🔑 KEY FINDINGS:\n")
+cat("\n KEY FINDINGS:\n")
 cat("• Pooled burnout prevalence:", sprintf("%.2f%% (95%% CI: %.2f%% to %.2f%%)", 
                                             overall_results$pred * 100,
                                             overall_results$ci.lb * 100,
@@ -548,6 +548,6 @@ if(exists("egger_test")) {
 }
 
 cat("\n✅ Analysis ready for manuscript preparation!\n")
-cat("🎯 Enhanced forest plot includes numerical RoB scores and female percentages\n")
-cat("📊 Female percentage meta-regression completed with visualization\n")
-cat("🚀 All outputs ready!\n")
+cat("✅  Enhanced forest plot includes numerical RoB scores and female percentages\n")
+cat("✅  Female percentage meta-regression completed with visualisation\n")
+cat("✅  All outputs ready for high-impact journal submission!\n")
