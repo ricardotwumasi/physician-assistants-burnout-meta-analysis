@@ -4,8 +4,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![R](https://img.shields.io/badge/R-4.1.0-blue.svg)](https://cran.r-project.org/)
 
-## Version 1.0.7
-**Updated:** January 2026
+## Version 1.0.8
+**Updated:** October 2026
+
+**v1.0.8:** Figure formatting updated for JAAPA Supplemental Digital Content (Appendices C–E): study labels as "Author et al, Year", AMA-style *P* values, revised axis labels and titles, and risk-of-bias note placed beneath the forest plot. The statistical analysis is unchanged from v1.0.7.
 
 ## Authors
 - Anna Bock¹, Alec Knight*², Ricardo Twumasi³
@@ -50,7 +52,7 @@ This repository contains the complete code and data for a systematic review and 
 # Set working directory to the R_code folder
 setwd("R_code/")
 
-# Run main analysis (Version 1.0.6)
+# Run main analysis (Version 1.0.8)
 source("01_PA_burnout_main_analysis_CLEAN.R")
 ```
 

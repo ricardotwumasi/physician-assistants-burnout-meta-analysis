@@ -1,13 +1,14 @@
 # ============================================================================
 # BURNOUT AMONG PHYSICIAN ASSISTANTS/ASSOCIATES: FIXED META-ANALYSIS
-# Version: 1.0.7 - New 2025 studies
+# Version: 1.0.8 - JAAPA figure formatting (SDC C-E)
 # Authors: Anna Bock, Alec Knight, Ricardo Twumasi
-# Last Updated: Jan 25 2026
+# Last Updated: Oct 26 2026
+# v1.0.8: figure labels/titles per JAAPA editor; statistical analysis unchanged
 # ============================================================================
 
 cat("PHYSICIAN ASSISTANTS/ASSOCIATES BURNOUT META-ANALYSIS\n")
 cat("=======================================================\n")
-cat("Version 1.0.7 - Clean and Corrected - Optimised Forest Plot\n")
+cat("Version 1.0.8 - JAAPA figure formatting\n")
 cat("Following methods as specified in manuscript\n\n")
 
 # ============================================================================
@@ -26,6 +27,11 @@ for (pkg in required_packages) {
 }
 
 cat("✅ All required packages loaded successfully!\n\n")
+
+# AMA/JAAPA style P values: no leading zero (e.g. ".98", "<.001")
+fmt_p <- function(p) {
+  if (p < 0.001) "<.001" else sub("^0", "", sprintf("%.2f", p))
+}
 
 # ============================================================================
 # DATA LOADING AND PREPARATION
@@ -62,8 +68,8 @@ pa_clean <- pa_data %>%
     # Clean female percentage
     female_percentage_clean = as.numeric(female_percentage),
     
-    # Create study labels
-    study_label_clean = paste(gsub(" et al.*", "", author), year),
+    # Create study labels (JAAPA style, matches Appendix B: "Bautista et al, 2024")
+    study_label_clean = paste0(trimws(gsub(" et al.*", "", author)), " et al, ", year),
     
     # Risk of bias categories  
     rob_quality = case_when(
@@ -180,33 +186,44 @@ tryCatch({
   pdf("PA_forest_plot_main_with_rob_scores.pdf", width = 14, height = 10)
   
   # Create enhanced forest plot with risk of bias
+  forest_xlim <- c(-4.2, 3.0)
+  ilab_x <- c(-2.4, -1.9, -1.4)
+
   forest_plot <- forest(res_overall,
                         transf = transf.ilogit,
-                        at = c(0, 2, 0.4, 0.6, 0.8, 1.0),
-                        xlim = c(-4.2, 3.0),
+                        at = c(0, 0.2, 0.4, 0.6, 0.8, 1.0),
+                        xlim = forest_xlim,
+                        ylim = c(-2.5, res_overall$k + 3),
                         alim = c(-0, 1),
-                        xlab = "Proportion of Burnout in Physician Assistants/Associates",
+                        xlab = "Proportion of Burnout in PAs",
                         header = c("Study", "Proportion [95% CI]"),
-                        mlab = paste("Random Effects Model (I² = ", sprintf("%.2f%%", res_overall$I2), ")", sep = ""),
+                        mlab = bquote(paste("Random Effects Model (", italic(I)^2, " = ",
+                                            .(sprintf("%.1f%%", res_overall$I2)), ")")),
                         ilab = cbind(weights_pct,
                                      pa_final$risk_of_bias,
-                                     ifelse(is.na(pa_final$female_percentage_clean), 
-                                            "N/A", 
+                                     ifelse(is.na(pa_final$female_percentage_clean),
+                                            "N/A",
                                             paste0(pa_final$female_percentage_clean, "%"))),
-                        ilab.xpos = c(-2.8, -2.3, -1.8),
+                        ilab.xpos = ilab_x,
                         ilab.pos = 2,
                         cex = .9,
                         refline = 0.33)
-  
+
   # Add column headers
-  text(c(-2.8, -2.3, -1.8), 
-       res_overall$k + 2, 
-       c("Weight", "RoB", "Female %"), 
+  text(ilab_x,
+       res_overall$k + 2,
+       c("Weight", "RoB*", "% Female"),
        pos = 2, cex = 0.8, font = 2)
-  
-  # Add RoB legend at bottom
-  mtext("Risk of Bias (Newcastle-Ottawa Scale): 7-9 Low Risk | 4-6 Moderate Risk | 0-3 High Risk", 
-        side = 1, line = 4, cex = 0.7)
+
+  # Add RoB legend under the random-effects model row
+  text(forest_xlim[1], -2,
+       "*Risk of Bias (Newcastle-Ottawa Scale): 7-9 Low Risk | 4-6 Moderate Risk | 0-3 High Risk",
+       pos = 4, cex = 0.7)
+
+  # Appendix title
+  text(forest_xlim[1], res_overall$k + 4,
+       "APPENDIX C. Forest plot of burnout prevalence in PAs",
+       pos = 4, cex = 1, font = 2, xpd = NA)
   
   dev.off()
   cat("✅ Enhanced forest plot created successfully using working code structure\n")
@@ -235,19 +252,23 @@ tryCatch({
   
   # Create plots
   pdf("PA_publication_bias_assessment.pdf", width = 12, height = 8)
-  par(mfrow = c(2, 2))
-  
+  par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
+
   funnel(res_overall, main = "Funnel Plot")
   funnel(res_overall, level = c(90, 95, 99), shade = c("white", "gray75", "gray50"),
          main = "Contour-Enhanced Funnel Plot")
   funnel(trim_fill, main = "Trim-and-Fill Analysis")
-  
+
   # Summary
   plot.new()
   text(0.5, 0.8, "Publication Bias Summary", cex = 1.2, font = 2)
-  text(0.1, 0.6, paste("Egger's test: p =", sprintf("%.2f", egger_test$pval)), adj = 0)
-  text(0.1, 0.5, paste("Begg's test: p =", sprintf("%.2f", rank_test$pval)), adj = 0)
+  text(0.1, 0.6, bquote(paste("Egger's test: ", italic(P), " = ", .(fmt_p(egger_test$pval)))), adj = 0)
+  text(0.1, 0.5, bquote(paste("Begg's test: ", italic(P), " = ", .(fmt_p(rank_test$pval)))), adj = 0)
   text(0.1, 0.4, paste("Missing studies:", studies_trimmed), adj = 0)
+
+  # Appendix title
+  mtext("APPENDIX D. Funnel plots for publication bias", side = 3, outer = TRUE,
+        line = 0.5, adj = 0, font = 2)
   
   dev.off()
   cat("✅ Publication bias plots created\n")
@@ -379,17 +400,26 @@ if(!is.null(reg_female)) {
     
     # FIXED: Use regplot without conflicting cex parameters
     regplot(reg_female, 
-            xlab = "Female Percentage (%)", 
+            xlab = "Percentage of PAs that Identify as Female (%)",
             ylab = "Logit Proportion of Burnout",
-            main = "Meta-Regression: Female Percentage vs Burnout Rate",
+            main = "Meta-Regression: Percentage of PAs that Identify as Female vs Burnout Rate",
             pch = 19, 
             col = "darkblue", 
             ci = TRUE, 
             shade = TRUE)  # REMOVED: cex parameter that was causing conflicts
     
-    # Add study labels with specific cex
-    text(female_data$female_percentage_clean, female_data$yi, 
-         labels = female_data$study_label_clean, pos = 3, cex = 0.6)
+    # Add study labels with specific cex; default above the point, nudged where
+    # labels overlap neighbouring studies or the plot edge (1=below, 2=left, 4=right)
+    label_pos <- case_when(
+      grepl("^Hooker", female_data$author) ~ 4,
+      grepl("^Bautista", female_data$author) ~ 2,
+      grepl("^Norful", female_data$author) ~ 4,
+      grepl("^Halasy", female_data$author) ~ 2,
+      grepl("^Blackstone", female_data$author) ~ 4,
+      TRUE ~ 3
+    )
+    text(female_data$female_percentage_clean, female_data$yi,
+         labels = female_data$study_label_clean, pos = label_pos, cex = 0.6, xpd = NA)
     
     # Add correlation info
     cor_val <- cor(female_data$female_percentage_clean, female_data$yi, use = "complete.obs")
